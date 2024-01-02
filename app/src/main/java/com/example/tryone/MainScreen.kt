@@ -2,12 +2,19 @@ package com.example.tryone
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -31,6 +38,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,27 +79,33 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
                 backgroundColor = Color.White, // Set background color to white
-                contentColor = Color.Blue // Set content (text and icon) color to blue
+                //contentColor = Color.Blue, // Set content (text and icon) color to blue
+                //elevation = 4.dp, // Set elevation for a shadow
+                contentPadding = PaddingValues(16.dp) // Adjust content padding
+
             ) {
                 // Add search bar below "EXPLORE" and "FILTER"
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
-                        .background(color = Color.White)
-
+                        //.padding(8.dp)
+                        //.background(Color.White)
                 ) {
-                    Column(modifier = Modifier.weight(1f)){
+                    // Row containing "EXPLORE" and "FILTER"
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         Text(
                             text = "EXPLORE",
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Left,
                             color = Color.Blue // Set text color to blue
                         )
-                    }
-                    Column (modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End){
                         Text(
                             text = "FILTER",
                             fontWeight = FontWeight.Bold,
@@ -99,48 +113,65 @@ fun MainScreen() {
                             color = Color.Green // Set text color to blue
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                    // Search bar
+                    // Search bar
+                    Row(
+                        modifier = Modifier
+                            .clickable {
+                                // Handle clicks on the search bar, open the keyboard
+                                // or perform any other action
+                            }
+                    ) {
+                        OutlinedTextField(
+                            value = searchQuery.value,
+                            onValueChange = { searchQuery.value = it },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                                //.padding(8.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            textStyle = LocalTextStyle.current.copy(color = Color.Blue),
+                            label = {
+                                Text("Search", color = Color.Gray) // Set label text and color
+                            },
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    // Perform action when "Done" is clicked on the keyboard
+                                    // You can add any specific action here if needed
+                                }
+                            )
+                        )
+
+
+                    }
+
+
+
+
                 }
             }
         },
         bottomBar = {
             BottomBar(navController = navController)
         }
-    ) { innerPadding ->
+    ){ innerPadding ->
         // Use Column with weight modifier to layer the search bar above the Box containing BottomNavGraph
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Search bar with weight modifier
-            OutlinedTextField(
-                value = searchQuery.value,
-                onValueChange = { searchQuery.value = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .background(color = Color.White)
-                    .weight(0.12f), // Set weight to 1 to take available space
-                shape = RoundedCornerShape(16.dp), // Set rounded corner shape
-                textStyle = LocalTextStyle.current.copy(color = Color.Blue), // Set text color to blue
-                label = { Text("Search") }, // Set label text
-                leadingIcon = null, // No leading icon
-                trailingIcon = null, // No trailing icon
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        // Perform action when "Done" is clicked on the keyboard
-                    }
-                )
-            )
 
             // Box containing BottomNavGraph
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f) // Set weight to 1 to take available space
+                    .weight(0.2f) // Set weight to 1 to take available space
             ) {
                 BottomNavGraph(navController = navController, personRepository = personRepository)
             }
@@ -157,6 +188,9 @@ fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.List,
         BottomBarScreen.Grid,
+        BottomBarScreen.Nothing,
+        BottomBarScreen.Nothin,
+        BottomBarScreen.Not
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -179,9 +213,6 @@ fun RowScope.AddItem(
     navController: NavHostController
 ) {
     BottomNavigationItem(
-        label = {
-            Text(text = screen.title)
-        },
         icon = {
             Icon(
                 imageVector = screen.icon,

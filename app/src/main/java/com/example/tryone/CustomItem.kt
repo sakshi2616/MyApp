@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,34 +53,35 @@ fun CustomItem(person: Person) {
 
         val img= painterResource(id = R.drawable.ic_check_balance)
         Column (Modifier.weight(0.5f, fill = true)) {
-            Image(painter = img, contentDescription = null, modifier =  Modifier.fillMaxSize().clip(
+            Image(painter = img, contentDescription = null, modifier =  Modifier.fillMaxWidth().fillMaxHeight().clip(
                 RoundedCornerShape(8.dp)
             ))
         }
 
-        Column (Modifier.weight(1f, fill = true)){
+        Column (Modifier.weight(1.3f, fill = true)){
             Text(
                 text = person.name,
                 color = Color.Black,
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.SansSerif
             )
             Text(
                 text = "MRP :" + person.price,
                 color = Color.Black,
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.SansSerif
             )
         }
-        Column (Modifier.weight(1.5f, fill = true)){
+        Column (Modifier.weight(1f, fill = true), verticalArrangement = Arrangement.SpaceAround){
             person.extra?.let {
                 Text(
                     text = it,
                     color = Color.Black,
-                    fontSize =18.sp,
+                    fontSize =13.sp,
                     fontWeight = FontWeight.Light,
-                    lineHeight = 32.sp
-
+                    fontFamily = FontFamily.SansSerif
                 )
             }
         }

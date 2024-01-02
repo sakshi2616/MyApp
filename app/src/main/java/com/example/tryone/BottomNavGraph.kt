@@ -35,5 +35,23 @@ fun BottomNavGraph(navController: NavHostController, personRepository: PersonRep
             }
             LazyGridScreen(items = items, personRepository = personRepository)
         }
+        composable(BottomBarScreen.Nothing.route) {
+            // Do nothing, stay on the current screen
+            EmptyComposable()
+        }
+        composable(BottomBarScreen.Nothin.route) {
+            // Do nothing, stay on the current screen
+            EmptyComposable()
+        }
+        composable(BottomBarScreen.Not.route) {
+            // Do nothing, stay on the current screen
+            EmptyComposable()
+        }
     }
+}
+
+@Composable
+fun EmptyComposable() {
+    // Empty composable to ensure the screen doesn't go blank
+    // You can customize this if needed
 }

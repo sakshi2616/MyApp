@@ -18,6 +18,23 @@ sealed class BottomBarScreen(
     object Grid : BottomBarScreen(
         route = "grid",
         title= "Grid",
-        icon = Icons.Default.AccountCircle
+        icon = Icons.Default.AddCircle
+    )
+    object Nothing: BottomBarScreen(
+        route = "nothing",
+        title="Nothing",
+        icon= Icons.Default.AddCircle
+    )
+
+    object Nothin: BottomBarScreen(
+        route = "nothin",
+        title="Nothin",
+        icon= Icons.Default.AddCircle
+    )
+
+    object Not: BottomBarScreen(
+        route = "not",
+        title="Not",
+        icon= Icons.Default.AddCircle
     )
 }

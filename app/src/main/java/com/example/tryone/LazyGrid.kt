@@ -56,12 +56,14 @@ fun GridItem(person : Person) {
         modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 10.dp)
             .height(200.dp)
-            .width(200.dp),
-        horizontalAlignment = Alignment.Start
+            .width(200.dp)
+            .fillMaxSize(), // Make the Column fill the available space
+        horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally
+        verticalArrangement = Arrangement.Center
     ) {
         val img = painterResource(id = R.drawable.ic_check_balance)
         Row () {
-            Image(painter = img, contentDescription = null, contentScale = ContentScale.FillBounds, modifier = Modifier.size(width = 190.dp, height = 148.dp).clip(
+            Image(painter = img, contentDescription = null, contentScale = ContentScale.FillBounds, modifier = Modifier.size(width = 100.dp, height = 100.dp).clip(
                 RoundedCornerShape(8.dp)
             ))
         }
@@ -75,7 +77,7 @@ fun GridItem(person : Person) {
         }
         Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.Top){
             Text(
-                text = person.price,
+                text =  "MRP :" + person.price,
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.Light,
                 fontSize = 20.sp
