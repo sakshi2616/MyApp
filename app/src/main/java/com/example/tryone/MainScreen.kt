@@ -82,7 +82,8 @@ fun MainScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp),
-                backgroundColor = Color.White, // Set background color to white
+                backgroundColor = Color(0xffe6eaf6)
+                , // Set background color to white
                 //contentColor = Color.Blue, // Set content (text and icon) color to blue
                 //elevation = 4.dp, // Set elevation for a shadow
                 contentPadding = PaddingValues(16.dp) // Adjust content padding
@@ -101,14 +102,14 @@ fun MainScreen() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "EXPLORE",
-                            fontWeight = FontWeight.Bold,
+                            text = "Explore",
+                            fontWeight = FontWeight.ExtraBold,
                             textAlign = TextAlign.Left,
-                            color = Color.Blue // Set text color to blue
+                            color = Color.Black // Set text color to blue
                         )
                         Text(
-                            text = "FILTER",
-                            fontWeight = FontWeight.Bold,
+                            text = "Filter",
+                            fontWeight = FontWeight.ExtraBold,
                             textAlign = TextAlign.Right,
                             color = Color.Green // Set text color to blue
                         )
@@ -117,40 +118,30 @@ fun MainScreen() {
                     Spacer(modifier = Modifier.height(8.dp))
                     // Search bar
                     // Search bar
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .clickable {
-                                // Handle clicks on the search bar, open the keyboard
-                                // or perform any other action
-                            }
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(horizontal = 1.dp) // Add padding around the box
                     ) {
                         OutlinedTextField(
                             value = searchQuery.value,
                             onValueChange = { searchQuery.value = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(),
-                                //.padding(8.dp),
+                            modifier = Modifier.fillMaxSize(),
                             shape = RoundedCornerShape(16.dp),
                             textStyle = LocalTextStyle.current.copy(color = Color.Blue),
                             label = {
-                                Text("Search", color = Color.Gray) // Set label text and color
+                                Text("Search", color = Color.Gray, textAlign = TextAlign.Center) // Set label text and color
                             },
-                            keyboardOptions = KeyboardOptions.Default.copy(
-                                imeAction = ImeAction.Done
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                backgroundColor = Color.White, // Set background color to white
+                                focusedBorderColor = Color.Transparent, // Make the border transparent when focused
+                                unfocusedBorderColor = Color.Transparent // Make the border transparent when not focused
                             ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    // Perform action when "Done" is clicked on the keyboard
-                                    // You can add any specific action here if needed
-                                }
-                            )
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                            keyboardActions = KeyboardActions(onDone = {})
                         )
-
-
                     }
-
-
 
 
                 }
